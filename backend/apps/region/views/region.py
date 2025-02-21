@@ -28,6 +28,7 @@ from comutils.viewset.viewset import CustomModelViewSet
 """
 
 class RegionViewSet(CustomModelViewSet):
+
   queryset = Region.objects.all().order_by("id")
   serializer_class = RegionSerializer
   filterset_fields = ["status", "id", "parent"]
@@ -47,8 +48,8 @@ class RegionViewSet(CustomModelViewSet):
   请求方式： GET /regions/
 """
 class ProvincesView(APIView):
-  permission_classes = [IsAuthenticated]
-  authentication_classes = [JWTAuthentication]
+  # permission_classes = [IsAuthenticated]
+  # authentication_classes = [JWTAuthentication]
 
   def get(self, request):
     #补充缓存逻辑
@@ -166,7 +167,7 @@ class GetProvinceAreasListView(APIView):
 # TODO 
 # 方案二
 
-class AreaViewSet(CustomModelViewSet, FieldPermissionMixin):
+class AreaViewSet(CustomModelViewSet):
   """
   地区管理接口
   list:查询
@@ -188,17 +189,17 @@ class AreaViewSet(CustomModelViewSet, FieldPermissionMixin):
     # 使用集合操作检查是否有未知参数
     other_params_exist = any(param not in known_params for param in params)
     if other_params_exist:
-      queryset = self.queryset.filter(enable=True)
+      queryset = self.queryset.filter(status=True)
     else:
       pcode = params.get('pcode', None)
       params['limit'] = 999
       if params and pcode:
-        queryset = self.queryset.filter(enable=True, pcode=pcode)
+        queryset = self.queryset.filter(status=True, pcode=pcode)
       else:
-        queryset = self.queryset.filter(enable=True, level=1)
+        queryset = self.queryset.filter(status=True, level=1)
     page = self.paginate_queryset(queryset)
     if page is not None:
-      serializer = self.get_serializer(page, many=True, request=request)
+      serializer = self.get_serializer(page, many=True)
       return self.get_paginated_response(serializer.data)
-    serializer = self.get_serializer(queryset, many=True, request=request)
+    serializer = self.get_serializer(queryset, many=True)
     return DataResponse(data=serializer.data, msg="获取成功")

@@ -14,16 +14,21 @@ from django.urls import path, re_path
 
 from rest_framework import routers
 
-# from .views. import DictionaryViewSet, InitDictionaryViewSet
+from .views.region import RegionViewSet, ProvincesView, SubRegionsView, GetProvinceAreasListView, AreaViewSet
 
-# dict_router = routers.SimpleRouter()
-# dict_router.register(r"", DictionaryViewSet)
+region_router = routers.SimpleRouter()
+
+region_router.register(r"", RegionViewSet)
+
+# 方案二
+# region_router.register(r"", AreaViewSet)
 
 urlpatterns = [
- 
+    re_path('root/', RegionViewSet.as_view({'get': 'region_root'})),
+    re_path('provinces/', RegionViewSet.as_view({'get': 'region_root'})),
 ]
 
-# urlpatterns += dict_router.urls
+urlpatterns += region_router.urls
 
 
 

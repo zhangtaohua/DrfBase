@@ -10,11 +10,11 @@ from rest_framework import routers
 
 from .views import ccc
 
-addr_url = routers.SimpleRouter()
-addr_url.register(r"address", xxxView)
+addr_router = routers.SimpleRouter()
+addr_router.register(r"address", xxxView)
 
 urlpatterns = [
     path("", ccc.as_view(), name="")
 ]
 
-urlpatterns += addr_url.urls
+urlpatterns += addr_router.urls

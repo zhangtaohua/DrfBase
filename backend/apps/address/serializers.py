@@ -10,7 +10,7 @@ from rest_framework.exceptions import APIException
 
 from .models import Address
 
-class AddressSerializer(ModelSerializer):
+class AddressSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Address
@@ -20,5 +20,15 @@ class AddressSerializer(ModelSerializer):
   # 有外键的新增数据时，需要自定义create函数，来处理外键相关数据
   def create(self, validated_data):
     return Address.objects.create(user=self.context["user"], **validated_data)
+  
+
+class AddressTitleSerializer(serializers.ModelSerializer):
+    """
+    地址标题
+    """
+
+    class Meta:
+        model = Address
+        fields = ('title',)
   
   

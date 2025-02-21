@@ -1,7 +1,15 @@
 Django
 django-extensions
 djangorestframework
-markdown
 django-filter
 djangorestframework-simplejwt
+django_restql
+django-simple-captcha
+drf_yasg
+markdown
+pypinyin
+requests
+cryptography
+pycryptodome
+pycryptodomex
 

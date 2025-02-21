@@ -65,3 +65,41 @@ python manage.py migrate apps.region.apps.RegionConfig zero
 ## 3.4 重新生成
 python ./deptools/del_migrations.py
 
+
+## 可集成应用
+pip install django-silk
+
+
+# 下面这个是 原django admin 的优化版本
+pip install django-simpleui
+
+# 注释风格
+5.1 reST风格
+
+这是现在流行的一种风格，reST风格，Sphinx的御用格式，比较紧凑。
+
+"""
+This is a reST style.
+ 
+:param param1: this is a first param
+:param param2: this is a second param
+:returns: this is a description of what is returned
+:raises keyError: raises an exception
+"""
+
+
+5.2 Google风格
+
+"""
+This is a groups style docs.
+ 
+Parameters:
+ param1 - this is the first param
+ param2 - this is a second param
+ 
+Returns:
+ This is a description of what is returned
+ 
+Raises:
+ KeyError - raises an exception
+"""

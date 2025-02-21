@@ -67,7 +67,7 @@ class RegionSimpleSerializer(serializers.ModelSerializer):
 
   class Meta:
     model = Region
-    fields = ["id", "name", "pid"]
+    fields = ["id", "name", "pid", "pcode"]
     read_only_fields = ["id"]
 
   

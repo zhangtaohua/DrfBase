@@ -67,7 +67,7 @@ class Users(AbstractUser, BaseTimestampsModel):
   # password = models.CharField(max_length=255, help_text="密码", name="password", verbose_name="密码")
   email = models.EmailField(max_length=150, null=True, blank=True,
                               help_text="邮箱", name="email", verbose_name="邮箱")
-  phone = models.CharField(max_length=32, null=True, blank=True,
+  phone = models.CharField(max_length=64, null=True, blank=True,
                               help_text="手机号", name="phone", verbose_name="手机号")
   tel = models.CharField(max_length=64, null=True, blank=True,
                               help_text="座机电话", name="tel", verbose_name="座机电话")

@@ -94,3 +94,24 @@ class DestroyModelMixin:
 
     def perform_destroy(self, instance):
         instance.delete()
+
+class SoftDestroyModelMixin:
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        self.perform_destroy(instance)
+        return DeleteResponse()
+    
+    def perform_destroy(self, instance):
+        # TODO
+        # this is wrong!!!!
+        # Think use SoftDeleteManage
+
+        if hasattr(instance._meta, "is_deleted"):
+            instance.is_deleted = True
+
+        if hasattr(instance._meta, "delete_time"):
+            instance.delete_time = "time"
+
+        # 级联软删除关联对象
+        
+        instance.save()

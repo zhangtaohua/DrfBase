@@ -19,9 +19,16 @@ class Address(BaseTimestampsModel):
                            help_text="user", name="user", verbose_name="所属用户")
   receiver = models.CharField(max_length=150, null=True, blank=True,
                               help_text="receiver", name="receiver", verbose_name="收货人")
-  phone = models.CharField(max_length=150, null=True, blank=True,
+  title = models.CharField(max_length=20, null=True, blank=True,
+                          help_text="title", name="title", verbose_name='地址名称')
+  
+  phone = models.CharField(max_length=64, null=True, blank=True,
                             help_text="phone", name="phone", verbose_name="手机号")
   
+  tel = models.CharField(max_length=64, null=True, blank=True, default='',
+                              help_text="座机电话", name="tel", verbose_name="座机电话")
+  email = models.EmailField(max_length=150, null=True, blank=True, default='',
+                              help_text="邮箱", name="email", verbose_name="邮箱")
 
   country = models.CharField(max_length=150, null=True, blank=True,
                             help_text="country", name="country", verbose_name="国家")
@@ -57,7 +64,7 @@ class Address(BaseTimestampsModel):
   is_default = models.BooleanField(default=False,
                                    help_text="is default", name="is_default", verbose_name="是否默认")
   is_deleted = models.BooleanField(default=False,
-                                   help_text="is deleted", name="is_deleted", verbose_name="逻辑删除")#是否有效，是否显示
+                                   help_text="is deleted", name="is_deleted", verbose_name="逻辑删除") #是否有效，是否显示
   
   def get_region_format(self):
 

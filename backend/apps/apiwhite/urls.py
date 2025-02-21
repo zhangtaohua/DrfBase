@@ -6,7 +6,7 @@
 
 
 """
-@Remark: 字典模块的 URL 配置
+@Remark: API接口白名单模块的 URL 配置
 """
 
 
@@ -16,11 +16,11 @@ from rest_framework import routers
 
 from .views.whitelist import ApiWhiteListViewSet
 
-api_whitelist_url = routers.SimpleRouter()
-api_whitelist_url.register(r"whitelist", ApiWhiteListViewSet)
+api_whitelist_router = routers.SimpleRouter()
+api_whitelist_router.register(r"", ApiWhiteListViewSet, basename="api_white_list")
 
 urlpatterns = [
 ]
 
-urlpatterns += api_whitelist_url.urls
+urlpatterns += api_whitelist_router.urls
 
