@@ -9,13 +9,13 @@ from rest_framework.settings import api_settings
 
 from rest_framework.viewsets import GenericViewSet
 
-from comutils.mixins import mixins
+from comutils.mixins import viewset_mixins
 
-class CustomModelViewSet(mixins.CreateModelMixin,
-                   mixins.RetrieveModelMixin,
-                   mixins.UpdateModelMixin,
-                   mixins.DestroyModelMixin,
-                   mixins.ListModelMixin,
+class CustomModelViewSet(viewset_mixins.CreateModelMixin,
+                   viewset_mixins.RetrieveModelMixin,
+                   viewset_mixins.UpdateModelMixin,
+                   viewset_mixins.DestroyModelMixin,
+                   viewset_mixins.ListModelMixin,
                    GenericViewSet):
     """
     A viewset that provides default `create()`, `retrieve()`, `update()`,

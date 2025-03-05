@@ -13,6 +13,7 @@ from ..models import Role
 
 from comutils.response.json_response import DataResponse
 from comutils.viewset.viewset import CustomModelViewSet
+from comutils.mixins.fastcrud_mixins import FastCrudMixin
 
 
 class RoleViewSet(CustomModelViewSet, FastCrudMixin, FieldPermissionMixin):

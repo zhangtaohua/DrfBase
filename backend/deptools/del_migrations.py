@@ -18,9 +18,24 @@ APPS_BASE_DIR = os.path.join(FILE_PARENT_PATH, "apps")
 
 sys.path.insert(0, FILE_PARENT_PATH)
 
-# os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'application.settings.development')
+# os.environ.setdefault("DJANGO_SETTINGS_MODULE", "application.settings.development")
 # django.setup()
 
+def del_migrations_v1():
+  # 要排出的文件目录
+  exclude = ["venv"]
+  for root, dirs, files in os.walk("."):
+    dirs[:] = list(set(dirs) - set(exclude))
+    if "migrations" in dirs:
+      dir = dirs[dirs.index("migrations")]
+      for root_level2, dirs_level2, files_level2 in os.walk(os.path.join(root, dir)):
+        for file_level3 in files_level2:
+          if file_level3 != "__init__.py":
+            dst_file = os.path.join(root_level2, file_level3)
+            print(f"删除文件: {dst_file}")
+            os.remove(dst_file)
+       
+   
 
 def del_migrations():
   print(f"删除迁移文件生成中……")
@@ -58,6 +73,6 @@ def del_sqlit3():
   if os.path.exists(sql_path):
      os.remove(sql_path)
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     del_migrations()
     del_sqlit3()

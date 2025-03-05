@@ -12,4 +12,11 @@ requests
 cryptography
 pycryptodome
 pycryptodomex
+channels
+channels-redis
+uvicorn
+gunicorn
+gevent
+Pillow
+pyinstaller
 

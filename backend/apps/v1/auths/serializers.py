@@ -46,7 +46,7 @@ def valid_email(email=None):
   
   return email
 
-def valid_sms_code(code=None, used_for=None):
+def valid_sms_code(code=None, used_for=None):           
   if not code:
     raise APIException("短信验证码不能为空")
   # TODO 验证短信验证码
