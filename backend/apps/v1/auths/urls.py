@@ -12,8 +12,8 @@
 from django.urls import path, re_path
 from rest_framework import routers
 
-from apps.auths.views import user_auth
-from apps.auths.views.token_auth import TokenObtainPairView, TokenRefreshView, TokenVerifyView
+from apps.v1.auths.views import user_auth
+from apps.v1.auths.views.token_auth import TokenObtainPairView, TokenRefreshView, TokenVerifyView
 
 # auths_url = routers.SimpleRouter()
 # user_url.register(r'auth', UserPasswordView)

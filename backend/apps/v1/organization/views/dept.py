@@ -4,7 +4,6 @@
 # @Author  : RJ
 # @email   : zthvivid@163.com
 
-from rest_framework import serializers
 from rest_framework.decorators import action
 from rest_framework.permissions import IsAuthenticated
 

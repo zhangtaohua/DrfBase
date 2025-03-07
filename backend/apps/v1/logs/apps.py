@@ -4,5 +4,5 @@ from django.apps import AppConfig
 class LogsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
 
-    name = 'apps.logs'
-    path = 'apps/logs'
+    name = 'apps.v1.logs'
+    path = 'apps/v1/logs'

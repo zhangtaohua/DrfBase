@@ -10,13 +10,13 @@ from rest_framework import serializers
 from rest_framework.exceptions import AuthenticationFailed, APIException
 
 from rest_framework_simplejwt.serializers import TokenObtainSerializer, TokenObtainPairSerializer, TokenRefreshSerializer, TokenVerifySerializer
-from apps.users.serializers import UserSerializer
+from apps.v1.users.serializers import UserSerializer
 
 from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.tokens import RefreshToken
 
 from comutils.common import regex
-from apps.users.models import Users
+from apps.v1.users.models import Users
 
 def valid_username(username=None):
   if not username:

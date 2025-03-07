@@ -12,8 +12,8 @@
 from django.urls import path, re_path
 from rest_framework import routers
 
-from apps.tools.views.health import HealthView, PingView
-from apps.tools.views.captcha import CaptchaView
+from apps.v1.tools.views.health import HealthView, PingView
+from apps.v1.tools.views.captcha import CaptchaView
 
 # tools_url = routers.SimpleRouter()
 # tools_url.register(r'', )

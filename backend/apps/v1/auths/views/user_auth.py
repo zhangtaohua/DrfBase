@@ -8,8 +8,8 @@ from rest_framework.viewsets import GenericViewSet
 
 from ..serializers import *
 
-from apps.users.serializers import UserSerializer
-from apps.users.models import Users
+from apps.v1.users.serializers import UserSerializer
+from apps.v1.users.models import Users
 
 from comutils.response.json_response import DataResponse, BadRequestResponse
 

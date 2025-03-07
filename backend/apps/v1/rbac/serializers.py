@@ -10,7 +10,7 @@ from rest_framework import serializers
 from rest_framework.exceptions import APIException
 from rest_framework.validators import UniqueValidator
 
-from .models import Role, Post, Dept, Menu, MenuField, MenuButton, RoleMenuPermission, RoleMenuFieldPermission,  RoleMenuButtonPermission
+from .models import Role, Menu, MenuField, MenuButton, RoleMenuPermission, RoleMenuFieldPermission,  RoleMenuButtonPermission
 
 Users = settings.AUTH_USER_MODEL
 
@@ -216,7 +216,7 @@ class RoleMenuButtonSerializer(serializers.ModelSerializer):
   isCheck = serializers.SerializerMethodField()
   data_range = serializers.SerializerMethodField()
   role_menu_btn_perm_id = serializers.SerializerMethodField()
-  dept = serializers.SerializerMethodField()
+  # dept = serializers.SerializerMethodField()
 
   def get_isCheck(self, obj):
       params = self.request.query_params
@@ -238,11 +238,11 @@ class RoleMenuButtonSerializer(serializers.ModelSerializer):
           return None
       return obj.id
 
-  def get_dept(self, obj):
-      obj = self.get_role_menu_btn_prem(obj)
-      if obj is None:
-          return None
-      return obj.dept.all().values_list("id", flat=True)
+  # def get_dept(self, obj):
+  #     obj = self.get_role_menu_btn_prem(obj)
+  #     if obj is None:
+  #         return None
+  #     return obj.dept.all().values_list("id", flat=True)
 
   def get_role_menu_btn_prem(self, obj):
       params = self.request.query_params
@@ -255,7 +255,7 @@ class RoleMenuButtonSerializer(serializers.ModelSerializer):
 
   class Meta:
       model = MenuButton
-      fields = ["id", "menu", "name", "isCheck", "data_range", "role_menu_btn_perm_id", "dept"]
+      fields = ["id", "menu", "name", "isCheck", "data_range", "role_menu_btn_perm_id",]
 
 
 class RoleMenuFieldSerializer(serializers.ModelSerializer):
@@ -333,86 +333,6 @@ class PostSerializer(serializers.ModelSerializer):
     read_only_fields = ["id"]
     
 
-class DeptSerializer(serializers.ModelSerializer):
-  """
-  部门-序列化器
-  """
-  parent_name = serializers.CharField(read_only=True, source="parent.name")
-  status_label = serializers.SerializerMethodField()
-  has_children = serializers.SerializerMethodField()
-  has_child = serializers.SerializerMethodField()
-  children = serializers.SerializerMethodField(read_only = True)
-
-  dept_user_count = serializers.SerializerMethodField()
-
-  def get_dept_user_count(self, obj: Dept):
-    return Users.objects.filter(dept=obj).count()
-
-  def get_has_child(self, obj: Dept):
-    hasChild = Dept.objects.filter(parent=obj.id)
-    if hasChild:
-      return True
-    return False
-
-  def get_status_label(self, obj: Dept):
-    if obj.status:
-      return "启用"
-    return "禁用"
-
-  def get_has_children(self, obj: Dept):
-    return Dept.objects.filter(parent_id=obj.id).count()
-  
-  # TODO 
-  # 极有可能是错的 
-  # 参考字典app 的 treeSerializer 来的。
-  def get_children(self, obj: Dept):
-    queryset = Dept.objects.filter(parent=obj.id).filter(status=1)
-
-    if queryset:
-      serializersIns = DeptSerializer(queryset, many=True)
-      return serializersIns.data
-    else: 
-      return None
-
-  class Meta:
-      model = Dept
-      fields = "__all__"
-      read_only_fields = ["id"]
-
-
-class DeptImportSerializer(serializers.ModelSerializer):
-  """
-  部门-导入-序列化器
-  """
-
-  class Meta:
-    model = Dept
-    fields = "__all__"
-    read_only_fields = ["id"]
-
-
-class DeptCreateUpdateSerializer(serializers.ModelSerializer):
-  """
-  部门管理 创建/更新时的列化器
-  """
-
-  def create(self, validated_data):
-    value = validated_data.get("parent", None)
-    if value is None:
-      validated_data["parent"] = self.request.user.dept
-    dept_obj = Dept.objects.filter(parent=self.request.user.dept).order_by("-sort").first()
-    last_sort = dept_obj.sort if dept_obj else 0
-    validated_data["sort"] = last_sort + 1
-    instance = super().create(validated_data)
-    instance.dept_belong_id = instance.id
-    instance.save()
-    return instance
-
-  class Meta:
-    model = Dept
-    fields = "__all__"
-
-
 class RoleSerializer(serializers.ModelSerializer):
   """
   角色-序列化器
@@ -435,7 +355,7 @@ class RoleCreateUpdateSerializer(serializers.ModelSerializer):
   角色管理 创建/更新时的列化器
   """
   menu = MenuSerializer(many=True, read_only=True)
-  dept = DeptSerializer(many=True, read_only=True)
+  # dept = DeptSerializer(many=True, read_only=True)
   permission = MenuButtonSerializer(many=True, read_only=True)
   key = serializers.CharField(max_length=50,
                               validators=[UniqueValidator(queryset=Role.objects.all(), message="权限字符必须唯一")])

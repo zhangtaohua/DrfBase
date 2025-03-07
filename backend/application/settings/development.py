@@ -45,13 +45,13 @@ INSTALLED_APPS = [
     'captcha',
 
      # custom app
-    'apps.users.apps.UsersConfig',
-    'apps.auths.apps.AuthsConfig',
-    'apps.wxauths.apps.WxauthsConfig',
-    'apps.tiktokauths.apps.TiktokauthsConfig',
-    'apps.dictionary.apps.DictionaryConfig',
-    'apps.tools.apps.ToolsConfig',
-    'apps.region.apps.RegionConfig',
+    'apps.v1.users.apps.UsersConfig',
+    'apps.v1.auths.apps.AuthsConfig',
+    'apps.v1.wxauths.apps.WxauthsConfig',
+    'apps.v1.tiktokauths.apps.TiktokauthsConfig',
+    'apps.v1.dictionary.apps.DictionaryConfig',
+    'apps.v1.tools.apps.ToolsConfig',
+    'apps.v1.region.apps.RegionConfig',
 ]
 
 MIDDLEWARE = [

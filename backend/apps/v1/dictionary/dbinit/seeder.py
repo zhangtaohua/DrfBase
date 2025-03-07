@@ -21,8 +21,8 @@ print("sys path", sys.path)
 os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'application.settings.development')
 django.setup()
 
-from apps.dictionary.models import Dictionary
-from apps.users.models import Users
+from apps.v1.dictionary.models import Dictionary
+from apps.v1.users.models import Users
 
 user = Users.objects.get(pk=1)
 

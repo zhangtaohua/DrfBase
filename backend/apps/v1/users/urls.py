@@ -12,7 +12,7 @@
 from django.urls import path, re_path
 from rest_framework import routers
 
-from apps.users.views.user import UserViewSet
+from apps.v1.users.views.user import UserViewSet
 
 user_url = routers.SimpleRouter()
 user_url.register(r'', UserViewSet)

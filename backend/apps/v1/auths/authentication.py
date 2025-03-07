@@ -10,7 +10,7 @@ from rest_framework_simplejwt.authentication import JWTAuthentication
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from rest_framework_simplejwt.tokens import AccessToken, RefreshToken
 
-from apps.users.models import Users
+from apps.v1.users.models import Users
 from comutils.response.json_response import BadRequestResponse, UnauthorizedResponse
 
 class UsernamePswAuthentication(BaseAuthentication):

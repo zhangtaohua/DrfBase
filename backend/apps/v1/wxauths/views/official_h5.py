@@ -25,7 +25,7 @@ from conf import configs
 from comutils.common.regex import MOBILE_PHONE_REGEX
 
 from comutils.response.json_response import DataResponse, ErrorsResponse, ValidationErrorResponse
-from apps.users.models import Users
+from apps.v1.users.models import Users
 # Create your views here.
 
 WXOP = WxOfficialPlatform()

@@ -6,7 +6,7 @@
 
 from rest_framework.serializers import ModelSerializer, SerializerMethodField
 
-from apps.users.models import Users
+from apps.v1.users.models import Users
 
 class UserSerializer(ModelSerializer):
 

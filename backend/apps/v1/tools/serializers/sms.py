@@ -11,7 +11,7 @@ from django.core.cache import cache
 from rest_framework import serializers
 
 from comutils.common.regex import MOBILE_PHONE_REGEX
-from apps.users.models import Users
+from apps.v1.users.models import Users
 
 class SmsCodeSerializer(serializers.Serializer):
    phone = serializers.CharField(max_length=11, required=True, help_text="手机号")

@@ -5,8 +5,8 @@
 # @email   : zthvivid@163.com
 
 
-from apps.users.models import Users
-from apps.users.serializers import UserSerializer
+from apps.v1.users.models import Users
+from apps.v1.users.serializers import UserSerializer
 
 from comutils.viewset.viewset import CustomModelViewSet
 

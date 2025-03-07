@@ -5,5 +5,5 @@ class WxauthsConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
    
     # 更改路径
-    name = 'apps.wxauths'
-    path = "apps/wxauths"
+    name = 'apps.v1.wxauths'
+    path = 'apps/v1/wxauths'

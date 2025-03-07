@@ -13,7 +13,7 @@ from rest_framework.views import APIView
 from comutils.common import regex
 from comutils.common.cache_keys import SMS_CODE_CK
 from comutils.response.json_response import ErrorsResponse, BadRequestResponse, ValidationErrorResponse, DataResponse, SuccessResponse
-from apps.users.models import Users
+from apps.v1.users.models import Users
 
 class RegisterView(APIView):
   authentication_classes = []

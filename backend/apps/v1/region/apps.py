@@ -4,5 +4,5 @@ from django.apps import AppConfig
 class RegionConfig(AppConfig):
     default_auto_field = 'django.db.models.BigAutoField'
     
-    name = 'apps.region'
-    path = 'apps/region'
+    name = 'apps.v1.region'
+    path = 'apps/v1/region'

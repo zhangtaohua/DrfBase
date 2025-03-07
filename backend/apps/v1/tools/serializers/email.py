@@ -8,7 +8,7 @@ import re
 from rest_framework import serializers
 
 from comutils.common.regex import MOBILE_PHONE_REGEX
-from apps.users.models import Users
+from apps.v1.users.models import Users
 
 class EmailSerializer(serializers.Serializer):
   email = serializers.EmailField(max_length=150, min_length=3, required=True, help_text="手机号") 
