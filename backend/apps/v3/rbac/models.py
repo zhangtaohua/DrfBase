@@ -14,8 +14,8 @@ from comutils.models.models import BaseTimestampsModel
 class Role(BaseTimestampsModel):
   name = models.CharField(max_length=150, null=False,
                           help_text="role name", name="name", verbose_name="角色名称")
-  code = models.CharField(max_length=64,
-                          help_text="role key", name="code", verbose_name="角色权限字符")
+  key = models.CharField(max_length=64,
+                          help_text="role key", name="key", verbose_name="角色权限字符")
   sort = models.IntegerField(default=1,
                             help_text="sort", name="sort", verbose_name="角色顺序")
   STATUS_CHOICES = (
@@ -29,11 +29,31 @@ class Role(BaseTimestampsModel):
     (0, "否"),
     (1, "是"),
   )
-  is_admin = models.SmallIntegerField(choices=ADMIN_CHOICES, default=0, 
+  admin = models.IntegerField(choices=ADMIN_CHOICES, default=0, 
                               help_text="is_admin", name="admin", verbose_name="是否为管理员")
   
   remark = models.CharField(max_length=255, null=True, blank=True,
                             help_text="remark", name="remark", verbose_name="备注")
+  
+  
+  DATASCOPE_CHOICES = (
+    (0, "仅本人数据权限"),
+    (1, "本部门数据权限"),
+    (2, "本部门及以下数据权限"),
+    (3, "全部数据权限"),
+    (4, "自定数据权限"),
+  )
+  data_range = models.SmallIntegerField(choices=DATASCOPE_CHOICES, default=0,
+                                        help_text="data range", name="data_range", verbose_name="数据权限范围")
+  
+  #自定义数据权限时，即data_range=4时会用到，可以关联多个部门
+  # dept = models.ManyToManyField(to="Dept", db_constraint=False, 
+  #                               help_text="数据权限-关联部门", verbose_name="数据权限-关联部门")
+  
+  # menu = models.ManyToManyField(to="Menu", db_constraint=False, 
+  #                               help_text="关联菜单", verbose_name="关联菜单")
+  # permission = models.ManyToManyField(to="MenuButton", db_constraint=False,
+  #                                       help_text="关联菜单的接口按钮", verbose_name="关联菜单的接口按钮")
 
   user = models.ManyToManyField(to=settings.AUTH_USER_MODEL, db_constraint=False, 
                                 help_text="user relate role", verbose_name="用户关联角色")
@@ -57,18 +77,17 @@ class Menu(BaseTimestampsModel):
     name="parent",
     verbose_name="上级菜单",
   )
-  icon = models.CharField(max_length=255, null=True, blank=True,
-                           help_text="菜单图标", name="icon", verbose_name="菜单图标")
-  name = models.CharField(max_length=150, 
+  icon = models.CharField(max_length=150, null=True, blank=True,
+                           help_text="菜单图标", name="icon", verbose_name="菜单图标",)
+  name = models.CharField(max_length=64, 
                           help_text="菜单名称", name="name", verbose_name="菜单名称")
   sort = models.IntegerField(default=1,  null=True, blank=True, 
                              help_text="显示排序", name="sort", verbose_name="显示排序")
-  
   ISLINK_CHOICES = [
     (0, "否"),
     (1, "是"),
   ]
-  is_link = models.SmallIntegerField(choices=ISLINK_CHOICES, default=0,
+  is_link = models.BooleanField(choices=ISLINK_CHOICES, default=0,
                                 help_text="是否外链", name="is_link", verbose_name="是否外链")
   link_url = models.CharField(max_length=255, null=True, blank=True, 
                               help_text="链接地址", name="link_url", verbose_name="链接地址")
@@ -77,16 +96,14 @@ class Menu(BaseTimestampsModel):
     (0, "否"),
     (1, "是"),
   ]
-  is_catalog = models.SmallIntegerField(choices=ISCATALOG_CHOICES, default=0, 
+  is_catalog = models.BooleanField(choices=ISCATALOG_CHOICES, default=0, 
                                    help_text="是否目录", name="is_catalog", verbose_name="是否目录")
-  
   web_path = models.CharField(max_length=255,  null=True, blank=True, 
                               help_text="路由地址", name="web_path", verbose_name="路由地址")
   component = models.CharField(max_length=255, null=True, blank=True, 
                                 help_text="组件地址", name="component", verbose_name="组件地址")
   component_name = models.CharField(max_length=150, null=True, blank=True,
                                     help_text="组件名称", name="component_name", verbose_name="组件名称")
-  
   ISAUTOPM_CHOICES=(
     (0,"不自动创建"),
     (1,"自动创建")
@@ -99,21 +116,21 @@ class Menu(BaseTimestampsModel):
     (0, "禁用"),
     (1, "启用"),
   )
-  status = models.SmallIntegerField(choices=STATUS_CHOICES, default=1, blank=True, 
+  status = models.BooleanField(choices=STATUS_CHOICES, default=1, blank=True, 
                                help_text="菜单状态", name="status", verbose_name="菜单状态")
   CACHE_CHOICES = (
     (0, "禁用"),
     (1, "启用")
   )
-  cache = models.SmallIntegerField(choices=CACHE_CHOICES, default=0, blank=True, 
+  cache = models.BooleanField(choices=CACHE_CHOICES, default=0, blank=True, 
                               help_text="是否页面缓存", name="cache", verbose_name="是否页面缓存")
   
-  SIDEBAR_VISIBLE_CHOICES=(
+  VISIBLE_CHOICES=(
     (0, "不可见"),
     (1, "可见")
   )
-  is_sidebar_visible = models.SmallIntegerField(choices=SIDEBAR_VISIBLE_CHOICES, default=1, blank=True, 
-                                help_text="侧边栏中是否显示", name="visible", verbose_name="侧边栏中是否显示")
+  visible = models.BooleanField(choices=VISIBLE_CHOICES, default=1, blank=True, 
+                                help_text="侧边栏中是否显示", name="visible", verbose_name="侧边栏中是否显示",)
   is_iframe = models.BooleanField(default=False, blank=True, 
                                   help_text="框架外显示", name="is_iframe", verbose_name="框架外显示")
   is_affix = models.BooleanField(default=False, blank=True, 
@@ -193,7 +210,7 @@ class MenuButton(BaseTimestampsModel):
     (2, "PUT"),
     (3, "DELETE"),
   )
-  method = models.IntegerField(choices=METHOD_CHOICES, default=0, null=True, blank=True,
+  method = models.IntegerField(default=0, null=True, blank=True,
                                 help_text="api method", name="method", verbose_name="接口请求方法")
 
   class Meta:
@@ -224,7 +241,7 @@ class RoleMenuPermission(BaseTimestampsModel):
   )
 
   class Meta:
-      db_table = "rj_rbacv1_role_menu_permission"
+      db_table = "rj_role_menu_permission"
       verbose_name = "角色菜单权限表"
       verbose_name_plural = verbose_name
       # ordering = ("-create_datetime",)
@@ -232,29 +249,20 @@ class RoleMenuPermission(BaseTimestampsModel):
 class RoleMenuFieldPermission(BaseTimestampsModel):
   role = models.ForeignKey(to="Role", on_delete=models.CASCADE, db_constraint=False,
                            help_text="role", name="role", verbose_name="角色",)
-  menu_field = models.ForeignKey(to="MenuField", on_delete=models.CASCADE,related_name="menu_field", db_constraint=False,
-                            help_text="field", name="menu_field", verbose_name="字段")
-
-  CRUD_ENABLE_CHOICES  = (
-    (0, "禁止"),
-    (1, "允许")
-  )
-
-  is_query = models.SmallIntegerField(choices=CRUD_ENABLE_CHOICES, default=1, 
+  field = models.ForeignKey(to="MenuField", on_delete=models.CASCADE,related_name="menu_field", db_constraint=False,
+                            help_text="field", name="field", verbose_name="字段",)
+  is_query = models.BooleanField(default=1, 
                                  help_text="is query", name="is_query", verbose_name="是否可查询")
-  is_create = models.SmallIntegerField(choices=CRUD_ENABLE_CHOICES, default=1, 
+  is_create = models.BooleanField(default=1, 
                                   help_text="is create", name="is_create", verbose_name="是否可创建")
-  is_update = models.SmallIntegerField(choices=CRUD_ENABLE_CHOICES, default=1, 
+  is_update = models.BooleanField(default=1, 
                                   help_text="is update", name="is_update", verbose_name="是否可更新")
-  is_delete = models.SmallIntegerField(choices=CRUD_ENABLE_CHOICES, default=0, 
-                                  help_text="is delete", name="is_delete", verbose_name="是否可删除")
 
   class Meta:
     db_table =  "rj_rbacv1_role_menu_field_permission"
     verbose_name = "字段权限表"
     verbose_name_plural = verbose_name
     ordering = ("id",)
-
 
 class RoleMenuButtonPermission(BaseTimestampsModel):
   role = models.ForeignKey(
