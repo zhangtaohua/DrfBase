@@ -35,6 +35,36 @@ schema_view = get_schema_view(
    permission_classes=(permissions.AllowAny,),
 )
 
+
+v1 = [
+    # 接口白名单模型
+    # path("api/v1/whitelist/", include("apps.apiwhite.urls")),
+
+    # 中国行政区
+    path("api/v1/china/regions/", include("apps.v1.region.urls")),
+
+    # 字典模型
+    path("api/v1/dicts/", include("apps.v1.dictionary.urls")),
+
+    # 共用工具模块
+    path("api/v1/tools/", include("apps.v1.tools.urls")),
+
+    # 用户模块
+    path("api/v1/users/", include("apps.v1.users.urls")),
+
+    # 登录认证模块
+    path("api/v1/auths/", include("apps.v1.auths.urls")),
+
+    # 第三方登录认证模块--微信
+    path("api/v1/wxauths/", include("apps.v1.wxauths.urls")),
+
+     # 第三方登录认证模块--抖音
+    path("api/v1/tiktokauths/", include("apps.v1.tiktokauths.urls")),
+
+    # 日志模型
+    # path("api/v1/logs/", include("apps.v1.logs.urls")),
+]
+
 urlpatterns = [
     path("admin/", admin.site.urls),
 
@@ -42,32 +72,6 @@ urlpatterns = [
     path("swagger<format>/", schema_view.without_ui(cache_timeout=0), name="schema-json"),
     path("swagger/", schema_view.with_ui("swagger", cache_timeout=0), name="schema-swagger-ui"),
     path("redoc/", schema_view.with_ui("redoc", cache_timeout=0), name="schema-redoc"),
-
-    # 接口白名单模型
-    # path("api/whitelist/", include("apps.apiwhite.urls")),
-
-    # 中国行政区
-    path("api/china/regions/", include("apps.region.urls")),
-
-    # 字典模型
-    path("api/dicts/", include("apps.dictionary.urls")),
-
-    # 共用工具模块
-    path("api/tools/", include("apps.tools.urls")),
-
-    # 用户模块
-    path("api/users/", include("apps.users.urls")),
-
-    # 登录认证模块
-    path("api/auths/", include("apps.auths.urls")),
-
-    # 第三方登录认证模块--微信
-    path("api/wxauths/", include("apps.wxauths.urls")),
-
-     # 第三方登录认证模块--抖音
-    path("api/tiktokauths/", include("apps.tiktokauths.urls")),
-
-    # 日志模型
-    # path("api/logs/", include("apps.logs.urls")),
-   
 ]
+
+urlpatterns += v1

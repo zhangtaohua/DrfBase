@@ -14,8 +14,8 @@
 
 
 # 4 TODO
-1、创建serializers 数据没有做较验，全部传空也能创建一条数据
-2、可不可以修改出一个serializer 实现如下数据结构，就是不要是list，是dict版本的
+1、创建 serializers 数据没有做较验，全部传空也能创建一条数据
+2、可不可以修改出一个 serializer 实现如下数据结构，就是不要是list，是dict版本的
 
 ```
 {

@@ -12,7 +12,8 @@ from faker import Faker
 
 FILE_PATH = os.path.abspath(__file__)
 FILE_DIR_PATH = os.path.dirname(FILE_PATH) # dbinit
-APPS_BASE_DIR = os.path.dirname(os.path.dirname(FILE_DIR_PATH))
+APP_DIR_PATH = os.path.dirname(FILE_DIR_PATH) # dictionay
+APPS_BASE_DIR = os.path.dirname(os.path.dirname(APP_DIR_PATH))
 PROJ_PARENT_PATH = os.path.dirname(APPS_BASE_DIR)
 
 sys.path.insert(0, PROJ_PARENT_PATH)

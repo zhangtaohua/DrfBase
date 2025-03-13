@@ -24,7 +24,8 @@ sys.path.insert(0, FILE_PARENT_PATH)
 def del_migrations_v1():
   # 要排出的文件目录
   exclude = ["venv"]
-  for root, dirs, files in os.walk("."):
+  # for root, dirs, files in os.walk("."):
+  for root, dirs, files in os.walk(APPS_BASE_DIR):
     dirs[:] = list(set(dirs) - set(exclude))
     if "migrations" in dirs:
       dir = dirs[dirs.index("migrations")]
@@ -34,11 +35,8 @@ def del_migrations_v1():
             dst_file = os.path.join(root_level2, file_level3)
             print(f"删除文件: {dst_file}")
             os.remove(dst_file)
-       
-   
 
-def del_migrations():
-  print(f"删除迁移文件生成中……")
+def del_migrations(): 
   # all_apps = apps.get_app_configs()
   # for app in all_apps:
   #   print("APP_name:", app.name)
@@ -49,14 +47,17 @@ def del_migrations():
   #      print(f"删除 {app.name} 的迁移文件")
   #      continue
 
+  print(f"删除迁移文件生成中……")
+  versions_dirs = os.listdir(APPS_BASE_DIR)
+  for version_dir in versions_dirs:
+    version_dir_path = os.path.join(APPS_BASE_DIR, version_dir)
+    app_dirs = os.listdir(version_dir_path)
+    for dir in app_dirs:
+      print(f"删除{version_dir}/{dir} 的迁移文件")
+      app_migrations_dir = os.path.join(version_dir_path, dir, "migrations")
 
-  app_dirs = os.listdir(APPS_BASE_DIR)
-  for dir in app_dirs:
-     print(f"删除知{dir} 的迁移文件")
-     app_migrations_dir = os.path.join(APPS_BASE_DIR, dir, "migrations")
-
-     migrations = os.listdir(app_migrations_dir)
-     for migration in migrations:
+      migrations = os.listdir(app_migrations_dir)
+      for migration in migrations:
         file_path = os.path.join(app_migrations_dir, migration)
         if migration.startswith("000") and migration.endswith(".py"):
           os.remove(file_path)
@@ -74,5 +75,5 @@ def del_sqlit3():
      os.remove(sql_path)
 
 if __name__ == "__main__":
-    del_migrations()
-    del_sqlit3()
+  del_migrations()
+  del_sqlit3()
