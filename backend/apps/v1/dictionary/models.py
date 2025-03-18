@@ -7,9 +7,29 @@
 from django.db import models
 from django.conf import settings
 
+from comutils.choices.choices import EnDisNumberStatusChoices
 from comutils.models.models import BaseTimestampsModel
 
 # Create your models here.
+
+# FOR REF
+
+# class MyModelManager(models.Manager):
+#     def get_queryset(self):
+#         queryset = super().get_queryset()
+#         for obj in queryset:
+#             if obj.name is None:
+#                 obj.name = ''
+#             if obj.description is None:
+#                 obj.description = ''
+#         return queryset
+
+# class MyModel(models.Model):
+#     name = models.CharField(max_length=100, null=True, blank=True)
+#     description = models.TextField(null=True, blank=True)
+
+#     objects = MyModelManager()
+
 
 class Dictionary(BaseTimestampsModel):
 
@@ -25,10 +45,10 @@ class Dictionary(BaseTimestampsModel):
     (8, "images"),
   )
 
-  STATUS_CHOICES = (
-    (0, "禁用"),
-    (1, "启用"),
-  )
+  # STATUS_CHOICES = (
+  #   (0, "禁用"),
+  #   (1, "启用"),
+  # )
 
   IS_VALUE_CHOICES = (
     (0, "否"),
@@ -68,7 +88,7 @@ class Dictionary(BaseTimestampsModel):
   color = models.CharField(max_length=150, null=True, blank=True, 
                             help_text="show color", name="color", verbose_name="颜色")
 
-  status = models.SmallIntegerField(choices=STATUS_CHOICES, default=STATUS_CHOICES[1][0],
+  status = models.SmallIntegerField(choices=EnDisNumberStatusChoices, default=EnDisNumberStatusChoices["ENABLED"],
                               help_text="status", name="status", verbose_name="状态")
   
   sort = models.IntegerField(default=1, null=True, blank=True,

@@ -89,7 +89,7 @@ python manage.py runserver 0.0.0.0:8000
 python manage.py migrate apps.region.apps.RegionConfig zero
 
 ## 3.4 重新生成
-python ./deptools/del_migrations.py
+python ./devtools/del_migrations.py
 
 
 ## 可集成应用
@@ -98,6 +98,21 @@ pip install django-silk
 
 # 下面这个是 原django admin 的优化版本
 pip install django-simpleui
+
+python manage.py shell_plus
+%load_ext autoreload
+%autoreload 2
+
+# 导出 fixtures 数据
+django-admin dumpdata dictionary  不工作
+python .\manage.py dumpdata dictionary --indent 2  -o .\apps\v1\dictionary\fixtures\dictionary.json
+python3 manage.py dumpdata --natural-primary --natural-foreign -o db.json
+
+# 我的数据因为关联了用户，所以要先创建超级用户 才能导入成功 测试但导入的数据已经是乱码了
+python3 .\manage.py loaddata --format=json dictionary
+
+sys.modules.pop('apps.v1.dictionary.expose')
+
 
 # 注释风格
 5.1 reST风格

@@ -64,3 +64,20 @@ class DictionaryTreeSerializer(serializers.ModelSerializer):
     fields = "__all__"
     read_only_fields = ["id"]
 
+
+class DictionarySimpleTreeSerializer(serializers.ModelSerializer):
+  children = serializers.SerializerMethodField(read_only = True)
+
+  def get_children(self, instance):
+    queryset = Dictionary.objects.filter(parent=instance.id).filter(status=1)
+
+    if queryset:
+      serializersIns = DictionarySimpleTreeSerializer(queryset, many=True)
+      return serializersIns.data
+    else: 
+      return None
+
+  class Meta:
+    model = Dictionary
+    fields = ["id", "label", "code", "value", "children"]
+    read_only_fields = ["id"]
