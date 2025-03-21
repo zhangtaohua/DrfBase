@@ -47,7 +47,7 @@ def _get_all_dictionary_v1():
     
   return {ele.get("code"): ele for ele in data}
 
-def _get_dictionary_by_pid_v1(pid):
+def _get_dictionary_by_pid(pid):
   queryset =  Dictionary.objects.filter(parent=pid).filter(status=1)
   serializer = DictionarySimpleTreeSerializer(queryset, many=True)
   data = serializer.data
@@ -59,7 +59,6 @@ def _get_all_dictionary():
   serializer = DictionarySimpleTreeSerializer(queryset, many=True)
   data = serializer.data
   return {ele.get("code"): ele for ele in data}
-
 
 
 # def get_dictionary_config(schema_name=None):

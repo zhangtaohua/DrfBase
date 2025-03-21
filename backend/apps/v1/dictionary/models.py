@@ -12,7 +12,7 @@ from comutils.models.models import BaseTimestampsModel
 
 # Create your models here.
 
-# FOR REF
+# FOR REFERENCE
 
 # class MyModelManager(models.Manager):
 #     def get_queryset(self):
